@@ -1,0 +1,27 @@
+int threshold_volt = 250;
+int gas_sensor_val;
+
+void setup(){
+  Serial.begin(9600);
+  pinMode(A5,INPUT); //Setting mode of the pin of the gas sensor
+  pinMode(12,OUTPUT);//Setting mode of the pin of the buzzer
+  pinMode(9,OUTPUT); //Setting mode of the pin of led_red
+  pinMode(8,OUTPUT); //Setting mode of the pin of led_green
+}
+void loop(){
+  gas_sensor_val = analogRead(A5);
+  Serial.println(gas_sensor_val);
+  if(gas_sensor_val > threshold_volt){
+    Serial.println("GAS LEAKAGE!");
+    digitalWrite(9,HIGH);
+    digitalWrite(8,LOW);
+    //digitalWrite(12,HIGH);
+    tone(12,1000,200);
+  }
+  else{
+    digitalWrite(8,HIGH);
+    digitalWrite(9,LOW);
+    digitalWrite(12,LOW);
+  }  
+  delay(100);
+}
